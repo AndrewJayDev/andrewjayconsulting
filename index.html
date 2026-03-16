@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Andrew Jay Consulting — Practical AI for Small Business</title>
+  <meta id="meta-desc" name="description" content="Andrew Jay Consulting helps small businesses implement practical, production-ready AI solutions — from WhatsApp agents to intelligent document processing and custom chatbots." />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://andrewjayconsulting.com" />
+  <meta id="og-title" property="og:title" content="Andrew Jay Consulting — Practical AI for Small Business" />
+  <meta id="og-desc" property="og:description" content="Practical, production-ready AI solutions for small businesses. WhatsApp agents, document processing, custom chatbots, and more." />
+  <meta property="og:image" content="https://andrewjayconsulting.com/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta id="tw-title" name="twitter:title" content="Andrew Jay Consulting — Practical AI for Small Business" />
+  <meta id="tw-desc" name="twitter:description" content="Practical, production-ready AI solutions for small businesses." />
+
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0a0f1e;
+      --navy-mid:   #0f1829;
+      --navy-card:  #141e35;
+      --navy-border:#1e2d4a;
+      --accent:     #3b82f6;
+      --accent-glow:#60a5fa;
+      --accent-dim: rgba(59,130,246,0.12);
+      --teal:       #14b8a6;
+      --text:       #e2e8f0;
+      --text-muted: #94a3b8;
+      --text-dim:   #64748b;
+      --white:      #ffffff;
+      --radius:     12px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.35);
+      --transition: 0.25s ease;
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--navy);
+      color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-glow); }
+
+    img, svg { display: block; }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--navy); }
+    ::-webkit-scrollbar-thumb { background: var(--navy-border); border-radius: 3px; }
+
+    /* ===== UTILITY ===== */
+    .container {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(1.75rem, 3vw, 2.5rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 560px;
+    }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== NAVBAR ===== */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,15,30,0.85);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid transparent;
+      transition: border-color var(--transition), background var(--transition);
+    }
+    #navbar.scrolled {
+      border-bottom-color: var(--navy-border);
+      background: rgba(10,15,30,0.97);
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 28px;
+    }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 3px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+    .lang-btn {
+      padding: 4px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-dim);
+      transition: background var(--transition), color var(--transition);
+      border: none;
+      background: transparent;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+    }
+    .lang-btn.active {
+      background: var(--accent);
+      color: var(--white);
+    }
+    .lang-btn:hover:not(.active) { color: var(--text); }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all var(--transition);
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile nav drawer */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--navy-border);
+      padding: 20px 24px 28px;
+      z-index: 999;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .mobile-nav.open { display: flex; }
+    .mobile-nav a {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--text);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--navy-border);
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 0 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 100%);
+    }
+    .hero-glow {
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(59,130,246,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(59,130,246,0.3);
+      border-radius: 999px;
+      padding: 6px 16px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--accent-glow);
+      margin-bottom: 28px;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.5rem; color: var(--teal); }
+    .hero-headline {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero-headline .highlight {
+      background: linear-gradient(135deg, var(--accent) 0%, var(--teal) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .hero-ctas {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      box-shadow: 0 0 0 0 rgba(59,130,246,0.5);
+    }
+    .btn-primary:hover {
+      background: var(--accent-glow);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59,130,246,0.35);
+      color: var(--white);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text);
+      padding: 14px 28px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: 1px solid var(--navy-border);
+      cursor: pointer;
+      transition: border-color var(--transition), color var(--transition), transform var(--transition);
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 64px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.03em;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+    .scroll-hint {
+      margin-top: 60px;
+      display: flex;
+      justify-content: center;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ===== SERVICES ===== */
+    #services {
+      padding: 100px 0;
+      background: var(--navy-mid);
+      position: relative;
+    }
+    #services::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--navy-border), transparent);
+    }
+    .services-header {
+      margin-bottom: 56px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .service-card {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .service-card:hover {
+      border-color: rgba(59,130,246,0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+    }
+    .service-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .service-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+    .service-tag {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal);
+      padding: 3px 10px;
+      background: rgba(20,184,166,0.1);
+      border-radius: 999px;
+      border: 1px solid rgba(20,184,166,0.2);
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      padding: 100px 0;
+    }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-box {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+    .about-metric {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--navy-border);
+    }
+    .about-metric:last-child { border-bottom: none; }
+    .metric-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .metric-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .metric-bar {
+      flex: 1;
+      height: 6px;
+      background: var(--navy-border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .metric-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+    }
+    .metric-val {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--accent-glow);
+      white-space: nowrap;
+    }
+    .about-content .section-title { margin-bottom: 20px; }
+    .about-text {
+      color: var(--text-muted);
+      font-size: 0.97rem;
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+    .about-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); }
+
+    /* ===== PROCESS ===== */
+    #process {
+      padding: 100px 0;
+      background: var(--navy-mid);
+      position: relative;
+    }
+    #process::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--navy-border), transparent);
+    }
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      margin-top: 56px;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 32px;
+      left: calc(12.5% + 16px);
+      right: calc(12.5% + 16px);
+      height: 1px;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      opacity: 0.3;
+    }
+    .process-step {
+      text-align: center;
+      padding: 0 16px;
+    }
+    .step-num {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 2px solid rgba(59,130,246,0.35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--accent-glow);
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+    }
+    .step-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .step-desc {
+      font-size: 0.83rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      padding: 100px 0;
+    }
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+    .contact-info .section-title { margin-bottom: 16px; }
+    .contact-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .contact-detail .icon {
+      width: 36px;
+      height: 36px;
+      background: var(--accent-dim);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .contact-form {
+      background: var(--navy-card);
+      border: 1px solid var(--navy-border);
+      border-radius: var(--radius);
+      padding: 36px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 7px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      background: var(--navy);
+      border: 1px solid var(--navy-border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-size: 0.95rem;
+      font-family: inherit;
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      resize: none;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: var(--text-dim);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.12);
+    }
+    .form-group textarea { min-height: 120px; }
+    .form-note {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      margin-top: 14px;
+      text-align: center;
+    }
+    .form-note a { color: var(--accent); }
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 28px;
+    }
+    .form-success .check { font-size: 2.5rem; margin-bottom: 12px; }
+    .form-success h3 { color: var(--white); margin-bottom: 8px; }
+    .form-success p { color: var(--text-muted); font-size: 0.9rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--navy-mid);
+      border-top: 1px solid var(--navy-border);
+      padding: 40px 0;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--white);
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      transition: color var(--transition);
+    }
+    .footer-links a:hover { color: var(--text); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .about-inner,
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .process-steps::before { display: none; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+    }
+    @media (max-width: 600px) {
+      .hero-stats { gap: 28px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .process-steps { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+      #hero { padding: 100px 0 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav id="navbar" role="navigation" aria-label="Main navigation">
+    <div class="nav-logo">Andrew<span>Jay</span></div>
+
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#services" data-en="Services" data-es="Servicios">Services</a></li>
+        <li><a href="#about" data-en="About" data-es="Acerca de">About</a></li>
+        <li><a href="#process" data-en="Process" data-es="Proceso">Process</a></li>
+        <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+      </ul>
+
+      <div class="lang-toggle" role="group" aria-label="Language selection">
+        <button class="lang-btn active" id="btn-en" onclick="setLang('en')" aria-label="Switch to English">EN</button>
+        <button class="lang-btn" id="btn-es" onclick="setLang('es')" aria-label="Cambiar a Español">ES</button>
+      </div>
+
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav -->
+  <div class="mobile-nav" id="mobile-nav" role="navigation" aria-label="Mobile navigation">
+    <a href="#services" onclick="toggleMenu()" data-en="Services" data-es="Servicios">Services</a>
+    <a href="#about" onclick="toggleMenu()" data-en="About" data-es="Acerca de">About</a>
+    <a href="#process" onclick="toggleMenu()" data-en="Process" data-es="Proceso">Process</a>
+    <a href="#contact" onclick="toggleMenu()" data-en="Contact" data-es="Contacto">Contact</a>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero" aria-labelledby="hero-heading">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-content">
+
+        <div class="hero-badge fade-up">
+          <span data-en="Practical AI for Small Business" data-es="IA Práctica para Pequeños Negocios">Practical AI for Small Business</span>
+        </div>
+
+        <h1 class="hero-headline fade-up" id="hero-heading">
+          <span data-en='AI That <span class="highlight">Works</span> for<br>Your Business' data-es='IA que <span class="highlight">Funciona</span> para<br>Tu Negocio'>AI That <span class="highlight">Works</span> for<br>Your Business</span>
+        </h1>
+
+        <p class="hero-sub fade-up" data-en="Stop paying for AI tools that sit unused. I build production-ready systems that automate real work, integrate with your existing stack, and deliver measurable ROI — no hype, no fluff." data-es="Deja de pagar por herramientas de IA que no se usan. Construyo sistemas listos para producción que automatizan trabajo real, se integran con tus herramientas actuales y generan resultados medibles — sin promesas vacías.">
+          Stop paying for AI tools that sit unused. I build production-ready systems that automate real work, integrate with your existing stack, and deliver measurable ROI — no hype, no fluff.
+        </p>
+
+        <div class="hero-ctas fade-up">
+          <a href="#contact" class="btn-primary">
+            <span data-en="Get a Free Consultation" data-es="Solicita una Consulta Gratis">Get a Free Consultation</span>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#services" class="btn-secondary">
+            <span data-en="Explore Services" data-es="Ver Servicios">Explore Services</span>
+          </a>
+        </div>
+
+        <div class="hero-stats fade-up">
+          <div class="stat">
+            <div class="stat-num">6<span>+</span></div>
+            <div class="stat-label" data-en="AI Solutions" data-es="Soluciones de IA">AI Solutions</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num" style="color:var(--teal)">AWS<span style="color:var(--text-dim);font-size:1rem"> &amp; </span>Azure</div>
+            <div class="stat-label" data-en="Cloud Platforms" data-es="Plataformas en la Nube">Cloud Platforms</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">Real<span style="color:var(--teal);font-size:1.2rem"> ROI</span></div>
+            <div class="stat-label" data-en="Not Just Demos" data-es="No Solo Demos">Not Just Demos</div>
+          </div>
+        </div>
+
+        <div class="scroll-hint" aria-hidden="true"><div class="scroll-line"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services" aria-labelledby="services-heading">
+    <div class="container">
+      <div class="services-header">
+        <span class="section-label fade-up" data-en="What I Build" data-es="Lo Que Construyo">What I Build</span>
+        <h2 class="section-title fade-up" id="services-heading" data-en="AI Solutions That Move the Needle" data-es="Soluciones de IA que Generan Resultados">AI Solutions That Move the Needle</h2>
+        <p class="section-sub fade-up" data-en="Each engagement starts with your actual workflow — not a generic template. Here's what I most commonly build for small and mid-sized businesses." data-es="Cada proyecto comienza con tu flujo de trabajo real, no con una plantilla genérica. Esto es lo que más construyo para pequeñas y medianas empresas.">
+          Each engagement starts with your actual workflow — not a generic template. Here's what I most commonly build for small and mid-sized businesses.
+        </p>
+      </div>
+
+      <div class="services-grid">
+
+        <!-- Card 1 -->
+        <article class="service-card fade-up">
+          <div class="service-icon" aria-hidden="true">💬</div>
+          <h3 class="service-name" data-en="AI-Powered WhatsApp Agents" data-es="Agentes de WhatsApp con IA">AI-Powered WhatsApp Agents</h3>
+          <p class="service-desc" data-en="Conversational bots for lead qualification, appointment booking, and customer support — integrated directly into WhatsApp so your customers never leave the app they already use." data-es="Bots conversacionales para calificar leads, agendar citas y dar soporte al cliente, integrados directamente en WhatsApp para que tus clientes nunca tengan que salir de la app que ya usan.">
+            Conversational bots for lead qualification, appointment booking, and customer support — integrated directly into WhatsApp so your customers never leave the app they already use.
+          </p>
+          <span class="service-tag" data-en="Automation" data-es="Automatización">Automation</span>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="service-card fade-up">
+          <div class="service-icon" aria-hidden="true">📄</div>
+          <h3 class="service-name" data-en="Intelligent Document Processing" data-es="Procesamiento Inteligente de Documentos">Intelligent Document Processing</h3>
+          <p class="service-desc" data-en="Automate intake forms, invoices, and paperwork using AI-powered extraction and classification — eliminating manual data entry and the errors that come with it." data-es="Automatiza formularios, facturas y papeleo mediante extracción y clasificación con IA, eliminando la captura manual de datos y los errores que conlleva.">
+            Automate intake forms, invoices, and paperwork using AI-powered extraction and classification — eliminating manual data entry and the errors that come with it.
+          </p>
+          <span class="service-tag" data-en="Efficiency" data-es="Eficiencia">Efficiency</span>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="service-card fade-up">
+          <div class="service-icon" aria-hidden="true">🤖</div>
+          <h3 class="service-name" data-en="Custom AI Chatbots &amp; Assistants" data-es="Chatbots y Asistentes con IA a Medida">Custom AI Chatbots &amp; Assistants</h3>
+          <p class="service-desc" data-en="Branded chat agents for your website or internal teams — trained on your business knowledge to handle customer FAQs, onboarding workflows, or internal helpdesk requests." data-es="Agentes de chat con tu marca para tu sitio web o uso interno, entrenados con el conocimiento de tu negocio para atender preguntas frecuentes, procesos de incorporación o solicitudes internas.">
+            Branded chat agents for your website or internal teams — trained on your business knowledge to handle customer FAQs, onboarding workflows, or internal helpdesk requests.
+          </p>
+          <span class="service-tag" data-en="Customer Experience" data-es="Experiencia del Cliente">Customer Experience</span>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="service-card fade-up">
+          <div class="service-icon" aria-hidden="true">🗺️</div>
+          <h3 class="service-name" data-en="AI Strategy &amp; Workflow Audit" data-es="Estrategia de IA y Auditoría de Procesos">AI Strategy &amp; Workflow Audit</h3>
+          <p class="service-desc" data-en="A hands-on assessment of your current operations to pinpoint where AI can save the most time and money — delivered as a prioritized implementation roadmap, not a generic slide deck." data-es="Un análisis práctico de tus operaciones actuales para identificar dónde la IA puede ahorrar más tiempo y dinero, entregado como un plan de implementación priorizado, no como una presentación genérica.">
+            A hands-on assessment of your current operations to pinpoint where AI can save the most time and money — delivered as a prioritized implementation roadmap, not a generic slide deck.
+          </p>
+          <span class="service-tag" data-en="Strategy" data-es="Estrategia">Strategy</span>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="service-card fade-up">
+          <div class="service-icon" aria-hidden="true">📈</div>
+          <h3 class="service-name" data-en="CRM &amp; Sales Automation" data-es="Automatización de CRM y Ventas">CRM &amp; Sales Automation</h3>
+          <p class="service-desc" data-en="AI-driven lead scoring, automated follow-up sequences, and intelligent pipeline management that plug directly into your existing CRM — so nothing falls through the cracks." data-es="Calificación de leads con IA, seguimientos automatizados y gestión inteligente de tu pipeline de ventas, integrado directamente en tu CRM actual para que no se pierda ninguna oportunidad.">
+            AI-driven lead scoring, automated follow-up sequences, and intelligent pipeline management that plug directly into your existing CRM — so nothing falls through the cracks.
+          </p>
+          <span class="service-tag" data-en="Growth" data-es="Crecimiento">Growth</span>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="service-card fade-up">
+          <div class="service-icon" aria-hidden="true">📊</div>
+          <h3 class="service-name" data-en="Data Dashboards &amp; Reporting" data-es="Dashboards y Reportes Inteligentes">Data Dashboards &amp; Reporting</h3>
+          <p class="service-desc" data-en="Transform scattered spreadsheets and databases into live, AI-summarized dashboards you can query in plain language — so decisions get made on data, not gut feelings." data-es="Transforma hojas de cálculo dispersas y bases de datos en dashboards en tiempo real con resúmenes generados por IA, consultables en lenguaje natural, para que tomes decisiones basadas en datos, no en suposiciones.">
+            Transform scattered spreadsheets and databases into live, AI-summarized dashboards you can query in plain language — so decisions get made on data, not gut feelings.
+          </p>
+          <span class="service-tag" data-en="Insights" data-es="Análisis">Insights</span>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about" aria-labelledby="about-heading">
+    <div class="container">
+      <div class="about-inner">
+
+        <div class="about-visual fade-up" aria-hidden="true">
+          <div class="about-box">
+            <div class="about-metric">
+              <div class="metric-label" data-en="Cloud Infrastructure Expertise" data-es="Experiencia en Infraestructura Cloud">Cloud Infrastructure Expertise</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-bar"><div class="metric-fill" data-width="92"></div></div>
+                <span class="metric-val">AWS &amp; Azure</span>
+              </div>
+            </div>
+            <div class="about-metric">
+              <div class="metric-label" data-en="Production-Ready Systems" data-es="Sistemas Listos para Producción">Production-Ready Systems</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-bar"><div class="metric-fill" data-width="88"></div></div>
+                <span class="metric-val">88%</span>
+              </div>
+            </div>
+            <div class="about-metric">
+              <div class="metric-label" data-en="Cost Reduction Focus" data-es="Enfoque en Reducción de Costos">Cost Reduction Focus</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-bar"><div class="metric-fill" data-width="95"></div></div>
+                <span class="metric-val">95%</span>
+              </div>
+            </div>
+            <div class="about-metric">
+              <div class="metric-label" data-en="Maintainability Priority" data-es="Prioridad en Mantenibilidad">Maintainability Priority</div>
+              <div class="metric-bar-wrap">
+                <div class="metric-bar"><div class="metric-fill" data-width="90"></div></div>
+                <span class="metric-val">90%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="about-content fade-up">
+          <span class="section-label" data-en="About" data-es="Acerca de">About</span>
+          <h2 class="section-title" id="about-heading" data-en="AI Without the Hype — Just Results" data-es="IA Sin Promesas Vacías — Solo Resultados">AI Without the Hype — Just Results</h2>
+
+          <p class="about-text" data-en="I'm an independent consultant specializing in building production-ready AI systems on cloud infrastructure. With deep experience across AWS and Azure, I design solutions that are built to last — not demos that fall apart in the real world." data-es="Soy un consultor independiente especializado en construir sistemas de IA listos para producción sobre infraestructura en la nube. Con amplia experiencia en AWS y Azure, diseño soluciones duraderas, no demos que se desmoronan en el mundo real.">
+            I'm an independent consultant specializing in building production-ready AI systems on cloud infrastructure. With deep experience across AWS and Azure, I design solutions that are built to last — not demos that fall apart in the real world.
+          </p>
+
+          <p class="about-text" data-en="Every engagement is focused on real ROI: what gets automated, how much time it saves, and what it actually costs to run. No vanity metrics, no locked-in vendor contracts, no unnecessary complexity — just systems that work and that your team can actually maintain." data-es="Cada proyecto se enfoca en resultados reales: qué se automatiza, cuánto tiempo ahorra y cuánto cuesta operarlo. Sin métricas de vanidad, sin contratos cerrados con proveedores, sin complejidad innecesaria — solo sistemas que funcionan y que tu equipo puede mantener.">
+            Every engagement is focused on real ROI: what gets automated, how much time it saves, and what it actually costs to run. No vanity metrics, no locked-in vendor contracts, no unnecessary complexity — just systems that work and that your team can actually maintain.
+          </p>
+
+          <div class="about-badges">
+            <div class="badge"><span class="dot"></span> AWS</div>
+            <div class="badge"><span class="dot"></span> Azure</div>
+            <div class="badge"><span class="dot"></span> Python</div>
+            <div class="badge"><span class="dot"></span> OpenAI / Claude</div>
+            <div class="badge"><span class="dot"></span> LangChain</div>
+            <div class="badge"><span class="dot"></span> Zapier / Make</div>
+            <div class="badge"><span class="dot"></span> WhatsApp API</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section id="process" aria-labelledby="process-heading">
+    <div class="container">
+      <div style="text-align:center;margin-bottom:0">
+        <span class="section-label fade-up" data-en="How It Works" data-es="Cómo Funciona">How It Works</span>
+        <h2 class="section-title fade-up" id="process-heading" style="margin:0 auto 12px" data-en="From Discovery to Deployment" data-es="Del Diagnóstico al Despliegue">From Discovery to Deployment</h2>
+        <p class="section-sub fade-up" style="margin:0 auto" data-en="A straightforward engagement model designed for small businesses — not enterprise bureaucracy." data-es="Un modelo de trabajo directo diseñado para pequeñas empresas, no para burocracia corporativa.">A straightforward engagement model designed for small businesses — not enterprise bureaucracy.</p>
+      </div>
+
+      <div class="process-steps">
+        <div class="process-step fade-up">
+          <div class="step-num">01</div>
+          <h3 class="step-title" data-en="Discovery Call" data-es="Llamada de Diagnóstico">Discovery Call</h3>
+          <p class="step-desc" data-en="We map your current workflow and identify the highest-impact opportunities for AI — no commitment required." data-es="Mapeamos tu flujo actual e identificamos las oportunidades de mayor impacto para la IA, sin compromiso.">We map your current workflow and identify the highest-impact opportunities — no commitment required.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">02</div>
+          <h3 class="step-title" data-en="Proposal &amp; Scoping" data-es="Propuesta y Alcance">Proposal &amp; Scoping</h3>
+          <p class="step-desc" data-en="You receive a clear, fixed-scope proposal with timeline, cost, and expected outcomes — no moving goalposts." data-es="Recibes una propuesta clara con alcance fijo, cronograma, costo y resultados esperados. Sin cambios sorpresa.">You receive a clear, fixed-scope proposal with timeline, cost, and expected outcomes.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">03</div>
+          <h3 class="step-title" data-en="Build &amp; Integrate" data-es="Construcción e Integración">Build &amp; Integrate</h3>
+          <p class="step-desc" data-en="I build your solution on cloud infrastructure and integrate it with your existing tools, with regular check-ins throughout." data-es="Construyo tu solución en infraestructura cloud y la integro con tus herramientas actuales, con revisiones periódicas.">I build your solution and integrate it with your existing tools, with regular check-ins throughout.</p>
+        </div>
+        <div class="process-step fade-up">
+          <div class="step-num">04</div>
+          <h3 class="step-title" data-en="Handoff &amp; Support" data-es="Entrega y Soporte">Handoff &amp; Support</h3>
+          <p class="step-desc" data-en="Full documentation, team training, and optional ongoing support — so you're never dependent on me to keep things running." data-es="Documentación completa, capacitación del equipo y soporte opcional continuo para que nunca dependas de mí para operar.">Full documentation, team training, and optional ongoing support — so you're never dependent on me.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" aria-labelledby="contact-heading">
+    <div class="container">
+      <div class="contact-inner">
+
+        <div class="contact-info fade-up">
+          <span class="section-label" data-en="Get in Touch" data-es="Contáctame">Get in Touch</span>
+          <h2 class="section-title" id="contact-heading" data-en="Let's Talk About What AI Can Do for Your Business" data-es="Hablemos de Lo Que la IA Puede Hacer por Tu Negocio">Let's Talk About What AI Can Do for Your Business</h2>
+          <p class="contact-sub" data-en="Not sure where to start? That's exactly what the first conversation is for. Reach out and let's figure out what makes sense for your business — no jargon, no pressure." data-es="¿No sabes por dónde empezar? Para eso es exactamente la primera conversación. Escríbeme y veamos qué tiene sentido para tu negocio, sin tecnicismos ni presiones.">
+            Not sure where to start? That's exactly what the first conversation is for. Reach out and let's figure out what makes sense for your business — no jargon, no pressure.
+          </p>
+
+          <div class="contact-detail">
+            <div class="icon">✉️</div>
+            <a href="mailto:hello@andrewjayconsulting.com">hello@andrewjayconsulting.com</a>
+          </div>
+          <div class="contact-detail">
+            <div class="icon">🌐</div>
+            <span>andrewjayconsulting.com</span>
+          </div>
+          <div class="contact-detail">
+            <div class="icon">📍</div>
+            <span data-en="Available for remote engagements worldwide" data-es="Disponible para proyectos remotos en todo el mundo">Available for remote engagements worldwide</span>
+          </div>
+        </div>
+
+        <div class="contact-form fade-up">
+          <form id="contact-form" action="https://formspree.io/f/your-form-id" method="POST" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name" data-en="Your Name" data-es="Tu Nombre">Your Name</label>
+                <input type="text" id="name" name="name" required data-en-placeholder="Jane Smith" data-es-placeholder="Ana García" placeholder="Jane Smith" />
+              </div>
+              <div class="form-group">
+                <label for="email" data-en="Email Address" data-es="Correo Electrónico">Email Address</label>
+                <input type="email" id="email" name="email" required data-en-placeholder="jane@company.com" data-es-placeholder="ana@empresa.com" placeholder="jane@company.com" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="business" data-en="Your Business / Industry" data-es="Tu Negocio / Industria">Your Business / Industry</label>
+              <input type="text" id="business" name="business" data-en-placeholder="e.g. Real estate agency, law firm, restaurant group..." data-es-placeholder="p. ej. Agencia de bienes raíces, despacho legal, grupo restaurantero..." placeholder="e.g. Real estate agency, law firm, restaurant group..." />
+            </div>
+            <div class="form-group">
+              <label for="message" data-en="What Would You Like to Automate or Improve?" data-es="¿Qué Te Gustaría Automatizar o Mejorar?">What Would You Like to Automate or Improve?</label>
+              <textarea id="message" name="message" required data-en-placeholder="Describe your current challenge or the process you'd like AI to help with..." data-es-placeholder="Describe tu desafío actual o el proceso en el que te gustaría que la IA te ayudara..." placeholder="Describe your current challenge or the process you'd like AI to help with..."></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width:100%;justify-content:center">
+              <span data-en="Send Message" data-es="Enviar Mensaje">Send Message</span>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <p class="form-note">
+              <span data-en="Prefer email? Write directly to" data-es="¿Prefieres el correo? Escribe a">Prefer email? Write directly to</span>
+              <a href="mailto:hello@andrewjayconsulting.com">hello@andrewjayconsulting.com</a>
+            </p>
+          </form>
+          <div class="form-success" id="form-success">
+            <div class="check">✅</div>
+            <h3 data-en="Message Sent!" data-es="¡Mensaje Enviado!">Message Sent!</h3>
+            <p data-en="Thanks for reaching out. I'll get back to you within one business day." data-es="Gracias por escribir. Te responderé dentro de un día hábil.">Thanks for reaching out. I'll get back to you within one business day.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer role="contentinfo">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">Andrew<span>Jay</span> Consulting</div>
+        <p class="footer-copy" data-en="© 2026 Andrew Jay Consulting. All rights reserved." data-es="© 2026 Andrew Jay Consulting. Todos los derechos reservados.">© 2026 Andrew Jay Consulting. All rights reserved.</p>
+        <ul class="footer-links">
+          <li><a href="#services" data-en="Services" data-es="Servicios">Services</a></li>
+          <li><a href="#about" data-en="About" data-es="Acerca de">About</a></li>
+          <li><a href="#contact" data-en="Contact" data-es="Contacto">Contact</a></li>
+          <li><a href="mailto:hello@andrewjayconsulting.com">Email</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // ─── TRANSLATIONS (meta + dynamic content) ───────────────────────────────
+    const META = {
+      en: {
+        title:       'Andrew Jay Consulting — Practical AI for Small Business',
+        description: 'Andrew Jay Consulting helps small businesses implement practical, production-ready AI solutions — from WhatsApp agents to intelligent document processing and custom chatbots.',
+        ogTitle:     'Andrew Jay Consulting — Practical AI for Small Business',
+        ogDesc:      'Practical, production-ready AI solutions for small businesses. WhatsApp agents, document processing, custom chatbots, and more.',
+      },
+      es: {
+        title:       'Andrew Jay Consulting — IA Práctica para Pequeños Negocios',
+        description: 'Andrew Jay Consulting ayuda a pequeñas empresas a implementar soluciones de IA prácticas y listas para producción: agentes de WhatsApp, procesamiento de documentos, chatbots a medida y más.',
+        ogTitle:     'Andrew Jay Consulting — IA Práctica para Pequeños Negocios',
+        ogDesc:      'Soluciones de IA prácticas y listas para producción para pequeños negocios. Agentes de WhatsApp, procesamiento de documentos, chatbots y más.',
+      }
+    };
+
+    // ─── LANGUAGE SWITCH ─────────────────────────────────────────────────────
+    function setLang(lang) {
+      const html = document.documentElement;
+      html.lang = lang;
+      html.dataset.lang = lang;
+
+      // Toggle active button styles
+      document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+      document.getElementById('btn-es').classList.toggle('active', lang === 'es');
+
+      // Swap all data-en / data-es text nodes
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const raw = el.getAttribute('data-' + lang);
+        if (raw !== null) el.innerHTML = raw;
+      });
+
+      // Swap placeholder attributes
+      document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+        const ph = el.getAttribute('data-' + lang + '-placeholder');
+        if (ph) el.placeholder = ph;
+      });
+
+      // Update meta tags
+      const m = META[lang];
+      document.title = m.title;
+      document.getElementById('meta-desc').content  = m.description;
+      document.getElementById('og-title').content   = m.ogTitle;
+      document.getElementById('og-desc').content    = m.ogDesc;
+      document.getElementById('tw-title').content   = m.ogTitle;
+      document.getElementById('tw-desc').content    = m.ogDesc;
+
+      // Persist preference
+      try { localStorage.setItem('ajc-lang', lang); } catch(_) {}
+    }
+
+    // ─── RESTORE SAVED LANG ──────────────────────────────────────────────────
+    (function () {
+      let saved;
+      try { saved = localStorage.getItem('ajc-lang'); } catch(_) {}
+      if (saved === 'es') setLang('es');
+    })();
+
+    // ─── NAVBAR SCROLL SHADOW ────────────────────────────────────────────────
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    }, { passive: true });
+
+    // ─── HAMBURGER MENU ──────────────────────────────────────────────────────
+    function toggleMenu() {
+      const btn = document.getElementById('hamburger');
+      const nav = document.getElementById('mobile-nav');
+      const open = nav.classList.toggle('open');
+      btn.classList.toggle('open', open);
+      btn.setAttribute('aria-expanded', open);
+    }
+
+    // ─── INTERSECTION OBSERVER (fade-up) ─────────────────────────────────────
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          fadeObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach((el, i) => {
+      // Stagger siblings within the same parent
+      const siblings = el.parentElement.querySelectorAll('.fade-up');
+      const idx = Array.from(siblings).indexOf(el);
+      el.style.transitionDelay = `${idx * 80}ms`;
+      fadeObserver.observe(el);
+    });
+
+    // ─── METRIC BARS ─────────────────────────────────────────────────────────
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.querySelectorAll('.metric-fill').forEach(bar => {
+            bar.style.width = bar.dataset.width + '%';
+          });
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    document.querySelectorAll('.about-box').forEach(el => barObserver.observe(el));
+
+    // ─── CONTACT FORM SUBMIT ─────────────────────────────────────────────────
+    document.getElementById('contact-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const btn  = form.querySelector('button[type="submit"]');
+      const lang = document.documentElement.dataset.lang || 'en';
+
+      btn.disabled = true;
+      btn.querySelector('span').textContent = lang === 'es' ? 'Enviando…' : 'Sending…';
+
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          form.style.display = 'none';
+          document.getElementById('form-success').style.display = 'block';
+          // Apply current lang to success text
+          document.querySelectorAll('#form-success [data-en]').forEach(el => {
+            el.innerHTML = el.getAttribute('data-' + lang) || el.innerHTML;
+          });
+        } else {
+          throw new Error('Server error');
+        }
+      } catch(_) {
+        // Fallback: open mailto
+        const name    = encodeURIComponent(form.name.value);
+        const msg     = encodeURIComponent(form.message.value);
+        const subject = encodeURIComponent(lang === 'es' ? 'Consulta desde el sitio web' : 'Website Inquiry');
+        window.location.href = `mailto:hello@andrewjayconsulting.com?subject=${subject}&body=${msg}`;
+        btn.disabled = false;
+        btn.querySelector('span').textContent = lang === 'es' ? 'Enviar Mensaje' : 'Send Message';
+      }
+    });
+  </script>
+
+</body>
+</html>
